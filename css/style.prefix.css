@@ -210,6 +210,7 @@ header {
 
 .table-heading-id, .coin-id {
     padding-left: 1rem;
+    text-align: left;
 }
 
 .table-heading-price, .table-heading-change, .table-heading-marketcap, .coin-price, .coin-change, .coin-marketcap {
