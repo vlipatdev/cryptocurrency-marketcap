@@ -100,7 +100,7 @@ const axiosFn = () => {
       //slice and loop
       resultArr.slice(coinsPerPage * (curPage - 1), coinsPerPage * curPage).map((el, i) => {
         coinContainer.insertAdjacentHTML('beforeend', `
-        <button class="coin-wrapper">
+        <button class="coin-wrapper" aria-label="${el.id}">
           <span class="coin-rank">${el.rank}</span>
           <img class="logo" src="img/logos/${el.id}.png" onerror="this.onerror=null;this.src='img/logos/placeholder-logo.png';" alt="${el.id} logo">
           <span class="coin-id">${formatId(el.id)}</span>
