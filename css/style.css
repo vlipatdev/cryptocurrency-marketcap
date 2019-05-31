@@ -138,6 +138,7 @@ header {
     align-items: center;
     padding: 2rem;
     height: 6rem;
+    color: inherit;
     background: white;
     border-bottom: 1px solid rgba(0,0,0,.05);
     cursor: pointer;
