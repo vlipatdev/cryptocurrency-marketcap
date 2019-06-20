@@ -238,6 +238,10 @@ a, a:link, a:hover, a:visited, a:active {
         width: 0;
     }
 
+    button {
+        font-size: 1.2rem;
+    }
+
     .info-marketcap, .info-rank {
         display: block;
     }
@@ -258,12 +262,6 @@ a, a:link, a:hover, a:visited, a:active {
     }
 
     footer {
-        font-size: 1.2rem;
-    }
-}
-
-@media screen and (max-width: 500px) {
-    body {
         font-size: 1.2rem;
     }
 }

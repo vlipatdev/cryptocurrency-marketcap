@@ -56,18 +56,18 @@ let prevBtn;
 const addButton = () => {
   if (curPage == 1 ) {
     buttonContainer.innerHTML = (`
-    <button class="next">Page ${curPage + 1} &rarr;</button>
+    <button class="next" aria-label="next">Page ${curPage + 1} &rarr;</button>
     `)
   } else if (curPage == totalCoins / coinsPerPage) {
     buttonContainer.innerHTML = (`
-    <button class="previous">&larr; Page ${curPage - 1}</button>
+    <button class="previous" arial-label="previous">&larr; Page ${curPage - 1}</button>
     `)
   } else {
     buttonContainer.innerHTML = (`
-    <button class="previous">&larr;	Page ${curPage - 1}</button>
-    <button class="next">Page ${curPage + 1} &rarr;</button>
+    <button class="previous" aria-label="previous">&larr;	Page ${curPage - 1}</button>
+    <button class="next" aria-label"next">Page ${curPage + 1} &rarr;</button>
     `)
-  }
+  };
   nextBtn = Array.from(document.querySelectorAll('.next'));
   prevBtn = Array.from(document.querySelectorAll('.previous'));
 
@@ -75,7 +75,7 @@ const addButton = () => {
     el.addEventListener('click', () => {
       curPage++;
       updateUI();
-  })
+    });
   });
   
   prevBtn.map(el => {
@@ -145,12 +145,13 @@ const axiosFn = () => {
          } else {
             infoArr[i].classList.toggle('flex');
             el.classList.toggle('selected');
-         }})
+         };
+        });
       });
 
       subheading.textContent = `As of ${formatDate(new Date(result.data.timestamp))}`;
   })
-  .catch(error => console.log(error));
+  .catch(error => alert(error));
 }
 
 axiosFn();
