@@ -103,21 +103,21 @@ const axiosFn = () => {
         }
       });
 
-      const infoArr = document.querySelectorAll('.info');
-      const coinWrapperArr = document.querySelectorAll('.coin-wrapper');
-      let prevInfo = infoArr[0];
-      let prevCoin = coinWrapperArr[0];
-      coinWrapperArr.forEach((el, idx) => {
+      const infoList = document.querySelectorAll('.info');
+      const coinWrapperList = document.querySelectorAll('.coin-wrapper');
+      let prevInfo = infoList[0];
+      let prevCoin = coinWrapperList[0];
+      coinWrapperList.forEach((el, idx) => {
         el.addEventListener('click', () => {
-          if (prevInfo !== infoArr[idx]) {
+          if (prevInfo !== infoList[idx]) {
             prevInfo.classList.remove('flex');
-            infoArr[idx].classList.add('flex');
+            infoList[idx].classList.add('flex');
             prevCoin.classList.remove('selected');
             el.classList.add('selected');
-            prevInfo = infoArr[idx];
+            prevInfo = infoList[idx];
             prevCoin = el;
           } else {
-            infoArr[idx].classList.toggle('flex');
+            infoList[idx].classList.toggle('flex');
             el.classList.toggle('selected');
           }
         });
