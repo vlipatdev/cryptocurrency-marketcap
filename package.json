@@ -1,0 +1,24 @@
+{
+  "name": "cryptocurrency-marketcap",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vlipatdev/cryptocurrency-marketcap.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/vlipatdev/cryptocurrency-marketcap/issues"
+  },
+  "homepage": "https://github.com/vlipatdev/cryptocurrency-marketcap#readme",
+  "devDependencies": {
+    "eslint": "^5.16.0",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.18.0"
+  }
+}

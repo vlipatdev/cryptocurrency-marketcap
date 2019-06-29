@@ -3,9 +3,9 @@ const spinner = document.querySelector('.spinner');
 const coinContainer = document.querySelector('.coin-container');
 const buttonContainer = document.querySelector('.button-container');
 
-//generate empty rows onload
-const genRows = n => {
-  for(i = 0 ; i < n ; i++) {
+// generate empty rows onload
+const genRows = (n) => {
+  for (i = 0; i < n; i++) {
     coinContainer.insertAdjacentHTML('beforeend', `
     <div class="coin-wrapper">
       <span class="coin-rank"></span>
@@ -20,7 +20,7 @@ const genRows = n => {
 
 genRows(10);
 
-//remove rows
+// remove rows
 const removeRows = () => {
   coinContainer.innerHTML = (`
   <div class="table-heading">
@@ -33,71 +33,39 @@ const removeRows = () => {
   `);
 };
 
-//set parameters
+// set parameters
 const totalCoins = 250;
 const coinsPerPage = 50;
 let curPage = 1;
 
-//update ui function
-const updateUI = () => {
-  removeRows();
-  genRows(10);
-  axiosFn();
-  addButton();
-  window.scrollTo(0, 0);
-  spinner.style.display = 'block';
-  subheading.style.display = 'none';
-};
-
 let nextBtn;
 let prevBtn;
 
-//add button
-const addButton = () => {
-  if (curPage == 1 ) {
-    buttonContainer.innerHTML = (`
-      <button class="next" aria-label="next">Page ${curPage + 1} &rarr;</button>
-    `)
-  } else if (curPage == totalCoins / coinsPerPage) {
-    buttonContainer.innerHTML = (`
-      <button class="previous" arial-label="previous">&larr; Page ${curPage - 1}</button>
-    `)
+// formatting functions
+const formatId = id => id.split('-').join(' ').toUpperCase();
+const formatPrice = (price) => {
+  if (price > 1) {
+    parseFloat(price, 10).toFixed(2);
   } else {
-    buttonContainer.innerHTML = (`
-      <button class="previous" aria-label="previous">&larr;	Page ${curPage - 1}</button>
-      <button class="next" aria-label"next">Page ${curPage + 1} &rarr;</button>
-    `)
-  };
-  nextBtn = Array.from(document.querySelectorAll('.next'));
-  prevBtn = Array.from(document.querySelectorAll('.previous'));
-
-  nextBtn.map(el => {
-    el.addEventListener('click', () => {
-      curPage++;
-      updateUI();
-    });
-  });
-  
-  prevBtn.map(el => {
-    el.addEventListener('click', () => {
-      curPage--;
-      updateUI();
-  })
-  });
+    parseFloat(price, 10).toFixed(8);
+  }
 };
 
-//add button onload
-addButton();
+const formatChange = percentage => parseFloat(percentage, 10).toFixed(2);
+const formatNum = num => parseInt(num, 10).toLocaleString('en-US');
 
-//axios
+const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+const formatDate = d => `${monthNames[d.getMonth()]} ${d.getDate()}, ${d.getFullYear()} ${d.toLocaleTimeString()}`;
+
+// axios
 const axiosFn = () => {
   axios.get(`https://api.coincap.io/v2/assets?limit=${totalCoins}`)
-  .then(result => {
+    .then((result) => {
       spinner.style.display = 'none';
       subheading.style.display = 'block';
       removeRows();
       const resultArr = result.data.data;
-      //slice and loop
+      // slice and loop
       resultArr.slice(coinsPerPage * (curPage - 1), coinsPerPage * curPage).map((el, idx) => {
         coinContainer.insertAdjacentHTML('beforeend', `
         <button class="coin-wrapper" aria-label="${el.id}">
@@ -124,7 +92,7 @@ const axiosFn = () => {
         <div>
         `);
 
-        //add class on percentage
+        // add class on percentage
         const coinChange = Array.from(document.querySelectorAll('.coin-change'));
         el.changePercent24Hr > 0 ? coinChange[idx].classList.add('positive') : coinChange[idx].classList.add('negative');
       });
@@ -135,32 +103,71 @@ const axiosFn = () => {
       let prevCoin = coinWrapperArr[0];
       coinWrapperArr.map((el, idx) => {
         el.addEventListener('click', () => {
-          if(prevInfo !== infoArr[idx]) {
+          if (prevInfo !== infoArr[idx]) {
             prevInfo.classList.remove('flex');
             infoArr[idx].classList.add('flex');
             prevCoin.classList.remove('selected');
             el.classList.add('selected');
-            prevInfo = infoArr[idx]
+            prevInfo = infoArr[idx];
             prevCoin = el;
-         } else {
+          } else {
             infoArr[idx].classList.toggle('flex');
             el.classList.toggle('selected');
-         };
+          }
         });
       });
 
       subheading.textContent = `As of ${formatDate(new Date(result.data.timestamp))}`;
-  })
-  .catch(error => alert(error));
-}
+    })
+    .catch(error => alert(error));
+};
 
 axiosFn();
 
-//formatting functions
-const formatId = id => id.split('-').join(' ').toUpperCase();
-const formatPrice = price => price > 1 ? parseFloat(price, 10).toFixed(2) : parseFloat(price, 10).toFixed(8);
-const formatChange = percentage => parseFloat(percentage, 10).toFixed(2);
-const formatNum = num => parseInt(num, 10).toLocaleString('en-US');
+// update ui function
+const updateUI = () => {
+  removeRows();
+  genRows(10);
+  axiosFn();
+  addButton();
+  window.scrollTo(0, 0);
+  spinner.style.display = 'block';
+  subheading.style.display = 'none';
+};
 
-const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-const formatDate = d => `${monthNames[d.getMonth()]} ${d.getDate()}, ${d.getFullYear()} ${d.toLocaleTimeString()}`;
+// add button
+const addButton = () => {
+  if (curPage === 1) {
+    buttonContainer.innerHTML = (`
+      <button class="next" aria-label="next">Page ${curPage + 1} &rarr;</button>
+    `);
+  } else if (curPage === totalCoins / coinsPerPage) {
+    buttonContainer.innerHTML = (`
+      <button class="previous" arial-label="previous">&larr; Page ${curPage - 1}</button>
+    `);
+  } else {
+    buttonContainer.innerHTML = (`
+      <button class="previous" aria-label="previous">&larr; Page ${curPage - 1}</button>
+      <button class="next" aria-label"next">Page ${curPage + 1} &rarr;</button>
+    `);
+  }
+  nextBtn = Array.from(document.querySelectorAll('.next'));
+  prevBtn = Array.from(document.querySelectorAll('.previous'));
+
+  nextBtn.map((el) => {
+    el.addEventListener('click', () => {
+      curPage++;
+      updateUI();
+    });
+  });
+
+  prevBtn.map((el) => {
+    el.addEventListener('click', () => {
+      curPage--;
+      updateUI();
+    });
+  });
+};
+
+// add button onload
+addButton();
