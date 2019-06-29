@@ -5,7 +5,7 @@ const buttonContainer = document.querySelector('.button-container');
 
 // generate empty rows onload
 const genRows = (n) => {
-  for (i = 0; i < n; i++) {
+  for (let i = 0; i < n; i++) {
     coinContainer.insertAdjacentHTML('beforeend', `
     <div class="coin-wrapper">
       <span class="coin-rank"></span>
@@ -44,11 +44,13 @@ let prevBtn;
 // formatting functions
 const formatId = id => id.split('-').join(' ').toUpperCase();
 const formatPrice = (price) => {
+  let newPrice;
   if (price > 1) {
-    parseFloat(price, 10).toFixed(2);
+    newPrice = parseFloat(price, 10).toFixed(2);
   } else {
-    parseFloat(price, 10).toFixed(8);
+    newPrice = parseFloat(price, 10).toFixed(8);
   }
+  return newPrice;
 };
 
 const formatChange = percentage => parseFloat(percentage, 10).toFixed(2);
@@ -66,7 +68,7 @@ const axiosFn = () => {
       removeRows();
       const resultArr = result.data.data;
       // slice and loop
-      resultArr.slice(coinsPerPage * (curPage - 1), coinsPerPage * curPage).map((el, idx) => {
+      resultArr.slice(coinsPerPage * (curPage - 1), coinsPerPage * curPage).forEach((el, idx) => {
         coinContainer.insertAdjacentHTML('beforeend', `
         <button class="coin-wrapper" aria-label="${el.id}">
           <span class="coin-rank">${el.rank}</span>
@@ -93,15 +95,19 @@ const axiosFn = () => {
         `);
 
         // add class on percentage
-        const coinChange = Array.from(document.querySelectorAll('.coin-change'));
-        el.changePercent24Hr > 0 ? coinChange[idx].classList.add('positive') : coinChange[idx].classList.add('negative');
+        const coinChange = document.querySelectorAll('.coin-change');
+        if (el.changePercent24Hr > 0) {
+          coinChange[idx].classList.add('positive');
+        } else {
+          coinChange[idx].classList.add('negative');
+        }
       });
 
-      const infoArr = Array.from(document.querySelectorAll('.info'));
-      const coinWrapperArr = Array.from(document.querySelectorAll('.coin-wrapper'));
+      const infoArr = document.querySelectorAll('.info');
+      const coinWrapperArr = document.querySelectorAll('.coin-wrapper');
       let prevInfo = infoArr[0];
       let prevCoin = coinWrapperArr[0];
-      coinWrapperArr.map((el, idx) => {
+      coinWrapperArr.forEach((el, idx) => {
         el.addEventListener('click', () => {
           if (prevInfo !== infoArr[idx]) {
             prevInfo.classList.remove('flex');
@@ -151,19 +157,19 @@ const addButton = () => {
       <button class="next" aria-label"next">Page ${curPage + 1} &rarr;</button>
     `);
   }
-  nextBtn = Array.from(document.querySelectorAll('.next'));
-  prevBtn = Array.from(document.querySelectorAll('.previous'));
+  nextBtn = document.querySelectorAll('.next');
+  prevBtn = document.querySelectorAll('.previous');
 
-  nextBtn.map((el) => {
+  nextBtn.forEach((el) => {
     el.addEventListener('click', () => {
-      curPage++;
+      curPage += 1;
       updateUI();
     });
   });
 
-  prevBtn.map((el) => {
+  prevBtn.forEach((el) => {
     el.addEventListener('click', () => {
-      curPage--;
+      curPage -= 1;
       updateUI();
     });
   });
