@@ -20,17 +20,19 @@ const genRows = (n) => {
 
 genRows(10);
 
+let coinWrapperList;
+let infoList;
 // remove rows
 const removeRows = () => {
-  coinContainer.innerHTML = (`
-  <div class="table-heading">
-    <span class="table-heading-rank">Rank</span>
-    <span class="table-heading-id">Name</span>
-    <span class="table-heading-price">Price</span>
-    <span class="table-heading-change">Change(24h)</span>
-    <span class="table-heading-marketcap">Market Capitalization</span>
-  </div>
-  `);
+  coinWrapperList = document.querySelectorAll('.coin-wrapper');
+  coinWrapperList.forEach((coinWrapper) => {
+    coinWrapper.remove();
+  });
+
+  infoList = document.querySelectorAll('.info');
+  infoList.forEach((info) => {
+    info.remove();
+  });
 };
 
 // set parameters
@@ -38,8 +40,8 @@ const totalCoins = 250;
 const coinsPerPage = 50;
 let curPage = 1;
 
-let nextBtn;
-let prevBtn;
+let nextBtnList;
+let prevBtnList;
 
 // formatting functions
 const formatId = id => id.split('-').join(' ').toUpperCase();
@@ -68,27 +70,27 @@ const axiosFn = () => {
       removeRows();
       const resultArr = result.data.data;
       // slice and loop
-      resultArr.slice(coinsPerPage * (curPage - 1), coinsPerPage * curPage).forEach((el, idx) => {
+      resultArr.slice(coinsPerPage * (curPage - 1), coinsPerPage * curPage).forEach((coin, idx) => {
         coinContainer.insertAdjacentHTML('beforeend', `
-        <button class="coin-wrapper" aria-label="${el.id}">
-          <span class="coin-rank">${el.rank}</span>
-          <img class="logo" src="img/logos/${el.id}.png" onerror="this.onerror=null;this.src='img/logos/placeholder-logo.png';" alt="${el.id} logo">
-          <span class="coin-id">${formatId(el.id)}</span>
-          <span class="coin-price">$${formatPrice(el.priceUsd)}</span>
-          <span class="coin-change">${formatChange(el.changePercent24Hr)}%</span>
-          <span class="coin-marketcap">$${formatNum(el.marketCapUsd)}</span>
+        <button class="coin-wrapper" aria-label="${coin.id}">
+          <span class="coin-rank">${coin.rank}</span>
+          <img class="logo" src="img/logos/${coin.id}.png" onerror="this.onerror=null;this.src='img/logos/placeholder-logo.png';" alt="${coin.id} logo">
+          <span class="coin-id">${formatId(coin.id)}</span>
+          <span class="coin-price">$${formatPrice(coin.priceUsd)}</span>
+          <span class="coin-change">${formatChange(coin.changePercent24Hr)}%</span>
+          <span class="coin-marketcap">$${formatNum(coin.marketCapUsd)}</span>
         </button>
         <div class="info">
-          <span class="info-symbol">${formatId(el.id)} (${el.symbol})</span>
+          <span class="info-symbol">${formatId(coin.id)} (${coin.symbol})</span>
           <div class="info-container">
             <div>
-              <p class="info-rank"><strong>Rank:</strong> ${el.rank} </p>
-              <p class="info-price"><strong>Current Price:</strong> $${formatPrice(el.priceUsd)}</p>
-              <p class="info-marketcap"><strong>Market Cap:</strong> $${formatNum(el.marketCapUsd)}</p>
+              <p class="info-rank"><strong>Rank:</strong> ${coin.rank} </p>
+              <p class="info-price"><strong>Current Price:</strong> $${formatPrice(coin.priceUsd)}</p>
+              <p class="info-marketcap"><strong>Market Cap:</strong> $${formatNum(coin.marketCapUsd)}</p>
             </div>
             <div>
-              <p class="info-volume"><strong>Volume(24hr): </strong> $${formatNum(el.volumeUsd24Hr)}</p>
-              <p class="info-supply"><strong>Available Supply: </strong> ${formatNum(el.supply)} ${el.symbol}</p>
+              <p class="info-volume"><strong>Volume(24hr): </strong> $${formatNum(coin.volumeUsd24Hr)}</p>
+              <p class="info-supply"><strong>Available Supply: </strong> ${formatNum(coin.supply)} ${coin.symbol}</p>
             </div>
           </div>
         <div>
@@ -96,29 +98,29 @@ const axiosFn = () => {
 
         // add class on percentage
         const coinChange = document.querySelectorAll('.coin-change');
-        if (el.changePercent24Hr > 0) {
+        if (coin.changePercent24Hr > 0) {
           coinChange[idx].classList.add('positive');
         } else {
           coinChange[idx].classList.add('negative');
         }
       });
 
-      const infoList = document.querySelectorAll('.info');
-      const coinWrapperList = document.querySelectorAll('.coin-wrapper');
+      infoList = document.querySelectorAll('.info');
+      coinWrapperList = document.querySelectorAll('.coin-wrapper');
       let prevInfo = infoList[0];
       let prevCoin = coinWrapperList[0];
-      coinWrapperList.forEach((el, idx) => {
-        el.addEventListener('click', () => {
+      coinWrapperList.forEach((coinWrapper, idx) => {
+        coinWrapper.addEventListener('click', () => {
           if (prevInfo !== infoList[idx]) {
             prevInfo.classList.remove('flex');
             infoList[idx].classList.add('flex');
             prevCoin.classList.remove('selected');
-            el.classList.add('selected');
+            coinWrapper.classList.add('selected');
             prevInfo = infoList[idx];
-            prevCoin = el;
+            prevCoin = coinWrapper;
           } else {
             infoList[idx].classList.toggle('flex');
-            el.classList.toggle('selected');
+            coinWrapper.classList.toggle('selected');
           }
         });
       });
@@ -157,18 +159,18 @@ const addButton = () => {
       <button class="next" aria-label"next">Page ${curPage + 1} &rarr;</button>
     `);
   }
-  nextBtn = document.querySelectorAll('.next');
-  prevBtn = document.querySelectorAll('.previous');
+  nextBtnList = document.querySelectorAll('.next');
+  prevBtnList = document.querySelectorAll('.previous');
 
-  nextBtn.forEach((el) => {
-    el.addEventListener('click', () => {
+  nextBtnList.forEach((nextBtn) => {
+    nextBtn.addEventListener('click', () => {
       curPage += 1;
       updateUI();
     });
   });
 
-  prevBtn.forEach((el) => {
-    el.addEventListener('click', () => {
+  prevBtnList.forEach((prevBtn) => {
+    prevBtn.addEventListener('click', () => {
       curPage -= 1;
       updateUI();
     });
