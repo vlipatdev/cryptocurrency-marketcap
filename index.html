@@ -1,57 +1,83 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-139755427-3"></script>
-    <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'UA-139755427-3');
-    </script>
+	<head>
+		<script
+			async
+			src="https://www.googletagmanager.com/gtag/js?id=UA-139755427-3"
+		></script>
+		<script>
+			window.dataLayer = window.dataLayer || [];
+			function gtag() {
+				dataLayer.push(arguments);
+			}
+			gtag('js', new Date());
+			gtag('config', 'UA-139755427-3');
+		</script>
 
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <meta name="author" content="Val Lipat">
-    <meta name="description" content="Cryptocurrency Prices and Market Capitalizations">
-    <meta name="theme-color" content="#6E48AA">
-    <title>Cryptocurrency Prices and Market Capitalizations</title>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<meta name="author" content="vlipatdev" />
+		<meta
+			name="description"
+			content="Cryptocurrency Prices and Market Capitalizations"
+		/>
+		<meta name="theme-color" content="#6E48AA" />
+		<title>Cryptocurrency Prices and Market Capitalizations</title>
 
-    <link rel="stylesheet" href="css/style.prefix.css">
-    <link href="https://fonts.googleapis.com/css?family=Montserrat:300" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
-    <link href="img/favicon.ico" rel="icon" type="image/x-icon"/>
-    <script src="https://unpkg.com/axios/dist/axios.min.js" defer></script>
-    <script src="js/script.js" defer></script>
-</head>
-<body>
-    <header>
-        <a href="https://vlipatdev.github.io/cryptocurrency-marketcap/">
-            <img class="illustration" src="img/undraw_predictive_analytics.svg" alt="illustration">
-        </a>
-        <h1 class="heading"><span class="break">Top 250 Cryptocurrencies</span> <span class="break">by Market Capitalization</span></h1>
-        <p class="subheading"></p>
-        <div class="spinner"></div>
-    </header>
+		<link rel="stylesheet" href="css/style.prefix.css" />
+		<link
+			href="https://fonts.googleapis.com/css?family=Montserrat:300"
+			rel="stylesheet"
+		/>
+		<link
+			href="https://fonts.googleapis.com/css?family=Lato"
+			rel="stylesheet"
+		/>
+		<link href="img/favicon.ico" rel="icon" type="image/x-icon" />
+		<script src="https://unpkg.com/axios/dist/axios.min.js" defer></script>
+		<script src="js/script.js" defer></script>
+	</head>
+	<body>
+		<header>
+			<a href="https://vlipatdev.github.io/cryptocurrency-marketcap/">
+				<img
+					class="illustration"
+					src="img/undraw_predictive_analytics.svg"
+					alt="illustration"
+				/>
+			</a>
+			<h1 class="heading">
+				<span class="break">Top 250 Cryptocurrencies</span>
+				<span class="break">by Market Capitalization</span>
+			</h1>
+			<p class="subheading"></p>
+			<div class="spinner"></div>
+		</header>
 
-    <main>
-        <div class="coin-container">
-            <div class="table-heading">
-                <span class="table-heading-rank">Rank</span>
-                <span class="table-heading-id">Name</span>
-                <span class="table-heading-price">Price</span>
-                <span class="table-heading-change">Change(24h)</span>
-                <span class="table-heading-marketcap">Market Capitalization</span>
-            </div>
-        </div>
-        <div class="button-container"></div>
-    </main>
+		<main>
+			<div class="coin-container">
+				<div class="table-heading">
+					<span class="table-heading-rank">Rank</span>
+					<span class="table-heading-id">Name</span>
+					<span class="table-heading-price">Price</span>
+					<span class="table-heading-change">Change(24h)</span>
+					<span class="table-heading-marketcap">Market Capitalization</span>
+				</div>
+			</div>
+			<div class="button-container"></div>
+		</main>
 
-    <footer>
-        <p class="footer-text">
-            <span class="break">Made by <a href="https://vlipatdev.github.io">Val Lipat</a>.</span> 
-            <span class="break">Powered by <a href="https://docs.coincap.io/">CoinCap API 2.0</a>.</span>
-        </p>
-    </footer>
-</body>
+		<footer>
+			<p class="footer-text">
+				<span class="break"
+					>Made by <a href="https://github.com/vlipatdev">vlipatdev</a>.</span
+				>
+				<span class="break"
+					>Powered by
+					<a href="https://docs.coincap.io/">CoinCap API 2.0</a>.</span
+				>
+			</p>
+		</footer>
+	</body>
 </html>
